@@ -4,30 +4,26 @@ class SiteBuilder < Bridgetown::Builder
   # write builders which subclass SiteBuilder in plugins/builders
 end
 
-ViewForPhlex = Class.new(Bridgetown::ERBView) # need to figure out how to avoid hard-coding
-
 module Phlex
   module Bridgetown
-    module Context
-      def render(partial = nil, **kwargs)
-        if @_rendering || @_rendering_block
-          convertible = HashWithDotAccess::Hash.new({
-            data: {},
-            site: respond_to?(:site) ? site : Bridgetown::Current.site,
-          })
-          _raw ViewForPhlex.new(convertible).render(partial, locals: kwargs)
-        else
-          call.html_safe
-        end
+    VIEW_CONTEXT = Class.new(::Bridgetown::ERBView) # need to figure out how to avoid hard-coding
+
+    module Renderable
+      def render(...)
+        convertible = HashWithDotAccess::Hash.new({
+          data: {},
+          site: respond_to?(:site) ? site : ::Bridgetown::Current.site,
+        })
+        @_target << VIEW_CONTEXT.new(convertible).render(...)
       end
 
       def render_in(context, *args, **kwargs, &)
         if block_given?
           content = context.capture(&)
-          @_content = Phlex::Block.new(self) { _raw content }
+          @_content = Phlex::Block.new(self) { @_target << content }
         end
 
-        render
+        call.html_safe
       end
 
       def format
@@ -37,4 +33,4 @@ module Phlex
   end
 end
 
-Phlex::Context.include(Phlex::Bridgetown::Context)
+Phlex::Context.include(Phlex::Bridgetown::Renderable)

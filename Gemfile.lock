@@ -1,7 +1,6 @@
 GIT
   remote: https://github.com/joeldrapper/phlex.git
-  revision: 8e63df56406b74c90e2e4f71b079454b9a679f5d
-  branch: rails-rendering
+  revision: 52cf809fb03882441406b8e90641f2a4deb0ce28
   specs:
     phlex (0.1.0)
       zeitwerk (~> 2.6)

@@ -32,4 +32,4 @@ gem "bridgetown", "~> 1.1.0"
 # (you can optionally limit this to the "development" group)
 gem "puma", "~> 5.6"
 
-gem "phlex", github: "joeldrapper/phlex", branch: "rails-rendering"
+gem "phlex", github: "joeldrapper/phlex"
