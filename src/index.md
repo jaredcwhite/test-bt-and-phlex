@@ -5,7 +5,17 @@ layout: default
 template_engine: erb
 ---
 
-# Welcome to your new Bridgetown website.
+# Welcome to Phlex & Impart!
+
+<%= render ImpartIt.new(title: "Make It") do %>
+  <p><em>So rad!</em></p>
+<% end %>
+
+<%= render ImpartIt.new(title: "Count von", count: 42) do %>
+  <h4>Wowee</h4>
+<% end %>
+
+----
 
 <%= render PhlexIt.new(title: "It works!") %>
 
@@ -13,7 +23,7 @@ template_engine: erb
 
 <%=
   phlex link: "/phlex-this" do
-    a "Check out the Phlex page ->", href: helpers.relative_url(@link)
+    a "Check out the All-Phlex page ->", href: helpers.relative_url(@link)
   end
 %>
 

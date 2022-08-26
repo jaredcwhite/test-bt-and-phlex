@@ -7,6 +7,6 @@ end
 
 phlex title: "Fantastic!" do
   article class: "callout" do
-    component PhlexIt, title: @title
+    render PhlexIt.new(title: @title)
   end
 end
