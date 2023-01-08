@@ -1,7 +1,9 @@
 class Builders::InlinePhlex < SiteBuilder
   def build
-    helper :phlex, helpers_scope: true do |**kwargs, &block|
-      phlex_component = Class.new(Phlex::Component)
+    helper :phlex do |**kwargs, &block|
+      hlps = helpers
+
+      phlex_component = Class.new(Phlex::HTML)
 
       phlex_component.define_method :initialize do
         kwargs.each do |k, v|
@@ -11,13 +13,11 @@ class Builders::InlinePhlex < SiteBuilder
 
       phlex_component.define_method :template, &block
 
-      site = self.site
-
       phlex_component.define_method :helpers do
-        @helpers ||= Bridgetown::RubyTemplateView::Helpers.new(self, site)
+        @helpers ||= hlps
       end
 
-      phlex_component.new.(view_context: view).html_safe
+      hlps.view.render phlex_component.new
     end
   end
 end

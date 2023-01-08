@@ -1,16 +1,16 @@
-class PhlexIt < Phlex::Component
+class PhlexIt < BasePhlex
   def initialize(title:)
     @title = title.upcase
   end
 
   def template
     section do
-      h2 @title
+      h2 { @title }
       nav id: "main_nav" do
         ul do
-          li { a "Home", href: "/" }
-          li { a "About", href: helpers.absolute_url("/about") }
-          li { a(href: "/contact") { _raw helpers.markdownify("Co **nta** ct").delete_prefix("<p>").delete_suffix("</p>") } }
+          li { a(href: "/") { "Home" } }
+          li { a(href: helpers.absolute_url("/about")) { "About" } }
+          li { a(href: "/contact") { unsafe_raw helpers.markdownify("Co **nta** ct").delete_prefix("<p>").delete_suffix("</p>") } }
         end
       end
       div do
@@ -18,8 +18,4 @@ class PhlexIt < Phlex::Component
       end
     end
   end
-
-  def site = Bridgetown::Current.site
-
-  def helpers = @helpers ||= Bridgetown::RubyTemplateView::Helpers.new(self, site)
 end
